@@ -9,5 +9,4 @@ newproject:
 	git checkout source/main -- . ':!README.md' && \
 	git add . && \
 	git commit -m "Merge DS project template" && \
-	git remote remove source && \
-	git push origin main
+	git remote remove source
