@@ -1,13 +1,17 @@
-SOURCE_REPO = https://github.com/KorneevRV/DS_template
+PYTHON = python3
+VENV = .venv
 
-# Copies template files from the source repository to the specified directory.
-# Requires the DIR variable to be set (e.g., make newproject DIR=/path/to/target_repo).
-newproject:
-	cd $(DIR) && \
-	git remote add source $(SOURCE_REPO) && \
-	git fetch --depth 1 source main && \
-	git checkout source/main -- . ':!README.md' && \
-	git add . && \
-	git commit -m "Merge DS project template" && \
-	git remote remove source && \
-	git push origin main
+# creating virtual environment
+venv:
+	$(PYTHON) -m venv $(VENV)
+	@echo "Virtual environment created in '$(VENV)'"
+
+# installing packages
+install: venv
+	$(VENV)/bin/pip install --upgrade pip
+	$(VENV)/bin/pip install -r requirements.txt
+	@echo "Dependencies installed in the virtual environment"
+
+# cleaning temporary files
+clean:
+	find . -name "__pycache__" -exec rm -rf {} +
