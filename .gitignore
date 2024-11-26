@@ -1,0 +1,43 @@
+# Byte-compiled Python files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+.ENV/
+
+# Build artifacts
+*.egg-info/
+*.egg
+*.whl
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.out
+
+# IDE configurations
+.idea/
+.vscode/
+*.swp
+*~
+
+# Testing artifacts
+.coverage
+.cache/
+.nox/
+.tox/
+.pytest_cache/
+
+# Confidential files
+.env
+*.secret
+*.private
+
+# Untracked directories
+/infra/workspace
