@@ -1,0 +1,14 @@
+services:
+  dev-container:
+    image: mcr.microsoft.com/devcontainers/python:3.12-bullseye
+    container_name: python-dev-container
+    working_dir: /workspace
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "
+      pip install -U pip &&
+      tail -f /dev/null"
+    volumes:
+      - ./workspace:/workspace:cached,uid=1000,gid=1000
+    tty: true
