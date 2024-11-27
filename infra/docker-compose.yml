@@ -1,4 +1,5 @@
 services:
+
   dev-container:
     image: mcr.microsoft.com/devcontainers/python:3.12-bullseye
     container_name: python-dev-container
@@ -7,8 +8,21 @@ services:
       - "8000:8000"
     command: >
       sh -c "
-      pip install -U pip &&
+      pip install --root-user-action=ignore -U pip &&
       tail -f /dev/null"
     volumes:
       - ./workspace:/workspace:cached,uid=1000,gid=1000
     tty: true
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000" # webui
+      - "9001:9001" # console
+    env_file:
+      - ./MinIO/.env
+    volumes:
+      - ./MinIO/data:/data
+      - ./MinIO/config:/root/.minio
+    command: server /data --console-address ":9001"

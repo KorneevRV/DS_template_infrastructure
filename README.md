@@ -18,26 +18,75 @@
 
 ## 2. Уровень проекта
 
-Этот уровень содрежит готовый шаблон репозитория с шаблонами автоматизации для:
+Этот уровень содержит готовый шаблон репозитория с шаблонами автоматизации для:
 - Создания виртуального окружения и конфигурации зависимостей.
-- Подключения к компонентам инфрастуктурного уровня.
-- Запуска линтеров и форматтеров.
+- Подключения к компонентам инфраструктурного уровня.
+- Запуска линтеров и форматеров.
 
 # Использование
 
 Для использования шаблонов скопируйте этот репозиторий:
 
-``` bash
+```bash
 git clone https://github.com/KorneevRV/DS_template_infrastructure
 ```
 
-### Копирование шаблона репозиротория проекта
+### Запуск контейнеров
 
-1. Создайте локальный git репозиторий нового проекта с файлом README.md.
-2. Запустить копирование шаблона c аругуметом DIR=<путь до локального репозитория>. 
+- Запуск всей инфраструктуры:
+```bash
+cd infra && docker compose up dev-container
+```
+
+- Запуск только контейнера с devbox:
+```bash
+cd infra && docker compose up dev-container
+```
+
+### Копирование шаблона репозитория проекта
+
+1. Создайте локальный git репозиторий нового проекта с файлом README.md в директории `/infra/workspace`. Эта директория будет подключена к контейнеру c devbox.
+2. Создайте конфигурационный файл окружения по шаблону `creds.env.template`. Замените значение переменной `REPO_NAME` в нем на название своего репозитория `<your_repo_name>`.
+
+```bash
+cp creds.env.template creds.env
+sed -i '/^REPO_NAME=/c\REPO_NAME=<your_repo_name>' creds.env
+```
+
+3. Запустить копирование шаблона скриптом `newproject`.
     
-    Скрипт скопирует все файлы из [шаблона](https://github.com/KorneevRV/DS_template) кроме README.md, выполнит коммит с комментарием "Merge DS project template" и запушит изменения в main.
+    Скрипт создаст новую ветку `template`, скопирует все файлы из [шаблона](https://github.com/KorneevRV/DS_template) кроме README.md и выполнит коммит с комментарием "Merge DS project template". 
 
-``` bash
-make newproject DIR=<path to your local .git repository>
+```bash
+make newproject
+```
+
+Рекомендуется доработать полученный репозиторий (например, заполнить файл README.md) и выполнить слияние с веткой main с помощью команды git merge.
+
+### Подключение MinIO и DVC
+
+1. Создайте конфигурационный файл MinIO по шаблону `infra\MinIO\.env.template`. Замените значение переменных `MINIO_ROOT_USER` и `MINIO_ROOT_PASSWORD` на пару `<your_root_user>`/`<your_root_password>`, которая будет использоваться для доступа к MinIO.
+
+```bash
+cp infra/MinIO/.env.template infra/MinIO/.env
+
+sed -i 's/^MINIO_ROOT_USER=.*/MINIO_ROOT_USER=<your_root_user>/' infra/MinIO/.env
+
+sed -i 's/^MINIO_ROOT_PASSWORD=.*/MINIO_ROOT_PASSWORD=<your_root_password>/' infra/MinIO/.env
+```
+2. Запустите контейнеры
+3. Через веб-интерфейс MinIO ([localhost:9001](http://localhost:9001/)) создайте бакет и сгенерируйте ключи доступа. Эти данные нужно внести в конфигурационный файл `creds.env` в строки `MINIO_BUCKET_NAME`, `MINIO_ACCESS_KEY`, `MINIO_SECRET_KEY`. 
+```bash
+sed -i '/^MINIO_BUCKET_NAME=/c\MINIO_BUCKET_NAME=<your_bucket>' creds.env
+sed -i '/^MINIO_ACCESS_KEY=/c\MINIO_ACCESS_KEY=<your_akey>' creds.env
+sed -i '/^MINIO_BUCKET_NAME=/c\MINIO_BUCKET_NAME=<your_bucket>' creds.env
+```
+4. Запустить скрипт подключения и конфигурации DVC.
+
+    Скрипт выполнит инициализацию DVC в репозитории, добавит в DVC папку `data` и подключит DVC к бакету, который указан в `creds.env`.
+
+    После выполнения скрипта рекомендуется загрузить свои данные и выполнить `dvc commit` и `git commit` для начала отслеживания состояния данных.
+
+```bash
+make adds3
 ```

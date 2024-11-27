@@ -36,8 +36,11 @@ ENV/
 
 # Confidential files
 .env
+*.env
 *.secret
 *.private
 
 # Untracked directories
 /infra/workspace
+/infra/MinIO/data
+/infra/MinIO/config
