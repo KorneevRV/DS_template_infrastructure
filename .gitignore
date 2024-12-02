@@ -44,3 +44,5 @@ ENV/
 /infra/workspace
 /infra/MinIO/data
 /infra/MinIO/config
+/infra/mlflow/data
+/infra/postgres/mlflow_data

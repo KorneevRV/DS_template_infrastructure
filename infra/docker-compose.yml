@@ -26,3 +26,29 @@ services:
       - ./MinIO/data:/data
       - ./MinIO/config:/root/.minio
     command: server /data --console-address ":9001"
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    container_name: mlflow
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./mlflow/.env
+    volumes:
+      - ./mlflow/data:/mlflow
+    command: >
+      mlflow server
+      --backend-store-uri ${BACKEND_STORE_URI}
+      --default-artifact-root ${DEFAULT_ARTIFACT_ROOT}
+      --host 0.0.0.0
+      --port 5000
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    env_file:
+      - ./postgres/.env
+    volumes:
+      - ./postgres/mlflow_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
