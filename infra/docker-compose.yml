@@ -18,8 +18,8 @@ services:
     image: minio/minio:latest
     container_name: minio
     ports:
-      - "9000:9000" # webui
-      - "9001:9001" # console
+      - "9000:9000"
+      - "9001:9001"
     env_file:
       - ./MinIO/.env
     volumes:
@@ -38,8 +38,6 @@ services:
       - ./mlflow/data:/mlflow
     command: >
       mlflow server
-      --backend-store-uri ${BACKEND_STORE_URI}
-      --default-artifact-root ${DEFAULT_ARTIFACT_ROOT}
       --host 0.0.0.0
       --port 5000
 

@@ -12,6 +12,13 @@ newproject:
 	git commit -m "Merge DS project template" && \
 	git remote remove template
 
+# Creating virtual environment and install dependencies in dev-container
+# via running `make install` command.
+install:
+	docker exec -it --user 1000:1000 $(DEV_CONTAINER) bash -c "\
+		cd /workspace/$(REPO_NAME) && \
+		make install"
+
 # Initialize DVC in the specified directory.
 # Then adds the S3 bucket to the DVC repository.
 adds3:
@@ -26,6 +33,7 @@ adds3:
 		dvc remote modify my_s3_bucket endpointurl http://minio:9000 && \
 		dvc remote modify --local my_s3_bucket access_key_id $(MINIO_ACCESS_KEY) && \
 		dvc remote modify --local my_s3_bucket secret_access_key $(MINIO_SECRET_KEY) && \
+		git add .dvc/config && \
 		git rm -r --cached 'data' && \
 		git commit -m 'stop tracking data' && \
 		dvc add data && \
