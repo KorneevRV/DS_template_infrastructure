@@ -218,7 +218,7 @@ git branch -d dvc
 
 ![Runs on: Host Machine](https://img.shields.io/badge/Runs%20on-Host%20Machine-blue)
 ```
-make gitfix
+make fixgit
 ```
 
 # Полезные ссылки
