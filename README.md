@@ -45,7 +45,7 @@
 Здесь находится всё, что нужно для работы с самим проектом:
 - Создания виртуального окружения и конфигурации зависимостей.
 - Подключения к компонентам инфраструктурного уровня.
-- Запуска линтеров и форматеров.
+- Запуска линтера и форматера (по умолчанию - [Ruff](https://docs.astral.sh/ruff/)).
 
 <details>
 <summary><b>Поясняющие диаграммы</b></summary>
@@ -204,6 +204,10 @@ git branch -d dvc
         ...
     ```
     - Веб-интерфейс MinIO: [http://localhost:9001/](http://localhost:9001/)
+- В качестве линтера используйте установленный [Ruff](https://docs.astral.sh/ruff/). Запуск проверки:
+    ```
+    ruff check
+    ```
 
 ![Runs on: Host Machine](https://img.shields.io/badge/Runs%20on-Host%20Machine-blue)
 - По окончанию работы включите все контейнеры
@@ -220,11 +224,3 @@ git branch -d dvc
 ```
 make fixgit
 ```
-
-# Полезные ссылки
-
-1.  [VS Code Remote Development. Dev Containers tutorial](https://code.visualstudio.com/docs/devcontainers/tutorial)
-2. [DVC docs](https://dvc.org/)
-3. [MinIO docs](https://min.io/)
-4. [MLFlow docs](https://mlflow.org/)
-5. [Шаблон проекта по умолчанию](https://github.com/KorneevRV/DS_template)
