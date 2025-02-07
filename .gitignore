@@ -41,8 +41,8 @@ ENV/
 *.private
 
 # Untracked directories
-/infra/workspace
-/infra/MinIO/data
-/infra/MinIO/config
-/infra/mlflow/data
-/infra/postgres/mlflow_data
+/src/workspace
+/src/MinIO/data
+/src/MinIO/config
+/src/mlflow/data
+/src/postgres/mlflow_data
