@@ -112,7 +112,7 @@ cозданные при [первичной настройке](#Первичн
 
     - Скачайте `makefile` из [репозитория с шаблоном проекта](https://github.com/KorneevRV/DS_template):
     ```
-    wget https://raw.githubusercontent.com/KorneevRV/DS_template_infrastructure/main/makefile
+    wget https://raw.githubusercontent.com/KorneevRV/DS_template/main/makefile
     ```
     - Запуск копирования шаблона:
     ```bash
